@@ -108,6 +108,17 @@ numeroColunas = 4
 larguraColuna = math.floor(screenW / numeroColunas)
 tab = {}
 
+tab2 = {}
+
+
+for i = 0, 4 do
+    tab2[i] = {}
+      for j = 0, 4 do
+        tab2[i][j] = 0
+      end
+  end
+
+
 function getPosicaoColuna(numColuna)
     return (numColuna - 1) * larguraColuna
 end
@@ -125,48 +136,93 @@ local function novoJogo(event)
     
             x = getPosicaoColuna(coluna)
             y = linha
+            print("coluna", x, "linha", y)
         
-            local myRectangle = display.newRect( x, y, 75, 75 )
+            local myRectangle = display.newRoundedRect( x, y, 75, 75, 3 )
             myRectangle.strokeWidth = 1
             myRectangle:setFillColor( 0.5 )
-            myRectangle:setStrokeColor( 0, 1,1 )
+            myRectangle:setStrokeColor( 1, 1,1 )
     
-            tab[i][j] = display.newText("0", x, y, native.systemFont, 40 )
+           -- tab[i][j] = display.newText(" ", x, y, native.systemFont, 40 )
         end
+    end
+end
+
+
+function random()
+    math.randomseed(os.time())
+    num = math.random(4);
+    if(num <= 2) then
+        return 2
+    else 
+        return 4
+    end
+end
+
+function randomX()
+    math.randomseed(os.time())
+    num = math.random(4);
+    if(num == 1) then
+        return 40
+    elseif(num == 2) then
+        return 120
+    elseif(num == 3) then
+        return 200
+    elseif(num == 4) then
+        return 280
+    end
+end
+
+function randomY()
+    math.randomseed(os.time())
+    num = math.random(4);
+    if(num == 1) then
+        return 65
+    elseif(num == 2) then
+        return 140
+    elseif(num == 3) then
+        return 215
+    elseif(num == 4) then
+        return 290
     end
 end
 
 function desenhaGrid()
     for i = 1, 4 do
-      
       for j = 1, 4 do
-        tab[i][j] = display.newText("1", x, y, native.systemFont, 40 )
+        tab[i][j] = display.newText(random(), randomX(), randomY(), native.systemFont, 40 )
       end
     end
   end
 
 --movimentos
-local function irCima(event) do
-    for k = 1, #tab do
+local function irCima(event)
+    for k = 1, #tab2 do
         for i = 4, 2, -1 do
-          for j = 1, #tab do
-            while ((tab[i-1][j] == 0) and (tab[i][j]~=0)) do
-              tab[i-1][j] = tab[i][j];
-              tab[i][j] = 0
+          for j = 1, #tab2 do
+            while ((tab2[i-1][j] == 0) and (tab2[i][j]~=0)) do
+              tab2[i-1][j] = tab2[i][j];
+              
+
+              tab[i][j] = display.newText(tab2[i][j], randomX(), randomY(), native.systemFont, 40 )
+              tab2[i][j] = 0
               i = 4;
             end
-            if tab[i-1][j] == tab[i][j] then
-              tab[i][j] = tab[i-1][j]*2;
-              placar =  placar + tab[i][j];
-              tab[i-1][j] = 0;
+            if tab2[i-1][j] == tab2[i][j] then
+              tab2[i][j] = tab2[i-1][j]*2;
+              --placar =  placar + tab2[i][j];
+              tab[i][j] = display.newText(tab2[i][j], randomX(), randomY(), native.systemFont, 40 )
+              tab2[i-1][j] = 0;
             end
           end
         end
       end
+      desenhaGrid();
+      --gerarTile();
     end
-    desenhaGrid();
-    gerarTile();
-end
+   
+    
+
 local function irBaixo(event) 
 
 end
@@ -205,15 +261,6 @@ direita:translate(250, 400)
 
 
 --teste
-function random()
-    math.randomseed(os.time())
-    num = math.random(4);
-    if(num <= 2) then
-        return 2
-    else 
-        return 4
-    end
-end
 
 function gerarTile()
     for i = 0, 1 do
