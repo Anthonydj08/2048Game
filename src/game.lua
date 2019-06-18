@@ -44,7 +44,6 @@ function defineplacar()
   end
 end
 
-
 function desenhaGrid()
   for i = 1, 4 do
     print()
