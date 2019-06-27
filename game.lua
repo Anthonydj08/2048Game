@@ -43,7 +43,7 @@ function scene:create(event)
     larguraColuna = math.floor(screenW / numeroColunas)
 
     vetor = {}
-    textoTela = {}
+    grid = {}
     placar = 0
     
     function getPosicaoColuna(numColuna)
@@ -61,7 +61,7 @@ function scene:create(event)
 
     function desenhaTabuleiro()
         for i = 1, numeroColunas do
-            textoTela[i] = {}
+            grid[i] = {}
             for j = 1, 4 do
 
                 local coluna = i + 0.5
@@ -102,10 +102,10 @@ function scene:create(event)
                 local cubo = display.newImage(sceneGroup, "images/back.png", x, y)
                 cubo:scale(0.63, 0.61)
 
-                textoTela[i][j] = display.newText(options)
-                textoTela[i][j].y = y
-                textoTela[i][j].x = x
-                textoTela[i][j]:setFillColor(1, 1, 1)
+                grid[i][j] = display.newText(options)
+                grid[i][j].y = y
+                grid[i][j].x = x
+                grid[i][j]:setFillColor(1, 1, 1)
                 
                 pontuacaoBack = display.newImage(sceneGroup, "images/back.png", 240, -5)
                 pontuacaoBack:scale(1, 0.4)
@@ -146,7 +146,7 @@ function scene:create(event)
         for i = 1, 4 do
             for j = 1, 4 do
                 vetor[i][j] = 0
-                textoTela[i][j].text = 0
+                grid[i][j].text = 0
             end
         end
         numeroAleatorio()
@@ -155,7 +155,6 @@ function scene:create(event)
     function novoJogo(event)
         
         if (event.phase == "began") then
-            
         print(placar)
         composer.setVariable( "finalScore", placar )
         gameOverBack.isVisible = false
@@ -163,7 +162,7 @@ function scene:create(event)
         for i = 1, 4 do
             for j = 1, 4 do
                 vetor[i][j] = 0
-                textoTela[i][j].text = 0
+                grid[i][j].text = 0
             end
         end
         numeroAleatorio()
@@ -228,34 +227,34 @@ function scene:create(event)
                     for i = 1, 4 do
                         for j = 1, 4 do
                             if(vetor[i][j] == 0) then
-                                textoTela[i][j]:setFillColor(0.8, 0.75, 0.70)
+                                grid[i][j]:setFillColor(0.8, 0.75, 0.70)
                             elseif(vetor[i][j] == 2) then
-                                textoTela[i][j]:setFillColor(0.160, 0.384, 1)
+                                grid[i][j]:setFillColor(0.160, 0.384, 1)
                             elseif(vetor[i][j] == 4) then
-                                textoTela[i][j]:setFillColor(0, 0.568, 0.917)
+                                grid[i][j]:setFillColor(0, 0.568, 0.917)
                             elseif(vetor[i][j] == 8) then
-                                textoTela[i][j]:setFillColor(0, 0.721, 0.831)
+                                grid[i][j]:setFillColor(0, 0.721, 0.831)
                             elseif(vetor[i][j] == 16) then
-                                textoTela[i][j]:setFillColor(0, 0.749, 0.647)
+                                grid[i][j]:setFillColor(0, 0.749, 0.647)
                             elseif(vetor[i][j] == 32) then
-                                textoTela[i][j]:setFillColor(0, 0.784, 0.325)
+                                grid[i][j]:setFillColor(0, 0.784, 0.325)
                             elseif(vetor[i][j] == 64) then
-                                textoTela[i][j]:setFillColor(0.392, 0.866, 0.090)
+                                grid[i][j]:setFillColor(0.392, 0.866, 0.090)
                             elseif(vetor[i][j] == 128) then
-                                textoTela[i][j]:setFillColor(0.682, 0.917, 0)
+                                grid[i][j]:setFillColor(0.682, 0.917, 0)
                             elseif(vetor[i][j] == 256) then
-                                textoTela[i][j]:setFillColor(1, 0.839, 0)
+                                grid[i][j]:setFillColor(1, 0.839, 0)
                             elseif(vetor[i][j] == 512) then
-                                textoTela[i][j]:setFillColor(1, 0.670, 0)
+                                grid[i][j]:setFillColor(1, 0.670, 0)
                             elseif(vetor[i][j] == 1024) then
-                                textoTela[i][j]:setFillColor(1, 0.427, 0)
+                                grid[i][j]:setFillColor(1, 0.427, 0)
                             elseif(vetor[i][j] == 2048) then
-                                textoTela[i][j]:setFillColor(0.866, 0.172, 0)
+                                grid[i][j]:setFillColor(0.866, 0.172, 0)
                             else 
-                                textoTela[i][j]:setFillColor(1,1,1)
+                                grid[i][j]:setFillColor(1,1,1)
                             end
-                            if (textoTela[i][j] ~= 0) then
-                                textoTela[i][j].text = vetor[i][j]
+                            if (grid[i][j] ~= 0) then
+                                grid[i][j].text = vetor[i][j]
                                 count = 1
                             else
                                 count = 0
